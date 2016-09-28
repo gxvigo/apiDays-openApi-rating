@@ -1,0 +1,21 @@
+swagger: "2.0"
+
+info:
+  version: 0.0.1
+  title: session rating
+  description: set of api to rate and get ratings of API Days session
+  termsOfService: totally free
+  contact: 
+    name: jg
+    url: jg.co.nz
+    email: g@jg.co.nz
+  license:
+    name: MIT
+    url: http://opensource.org/licenses/MIT
+
+schemes:
+  - https
+host: jg.co.nz
+basePath: /api
+
+paths: {}

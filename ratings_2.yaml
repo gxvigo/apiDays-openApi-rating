@@ -1,7 +1,7 @@
 swagger: "2.0"
 
 info:
-  version: 1.0.0
+  version: 2.0.0
   title: session rating
   description: set of api to rate and get ratings of API Days session
   termsOfService: totally free
