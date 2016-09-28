@@ -1,0 +1,117 @@
+swagger: "2.0"
+
+info:
+  version: 3.0.0
+  title: session rating
+  description: set of api to rate and get ratings of API Days session
+  termsOfService: totally free
+  contact: 
+    name: jg
+    url: jg.co.nz
+    email: g@jg.co.nz
+  license:
+    name: MIT
+    url: http://opensource.org/licenses/MIT
+  
+schemes:
+  - https
+host: jg.co.nz
+basePath: /api
+
+paths:
+  /ratings:
+    get:
+      summary: get some ratings
+      description: returns a list of all ratings unless differently requested (paging)
+      parameters:
+        - $ref: "#/parameters/PageSize"
+        - $ref: "#/parameters/PageNumber"
+      responses:
+        200:
+          description: list of ratings
+          schema:
+            $ref: "#/definitions/Ratings"
+        500:
+          $ref: "#/responses/DefaultErrorResponse"
+                    
+    post:
+      summary: create a rating
+      description: add a new rating to the rating list
+      parameters:
+        - name: rating
+          in: body
+          description: the rating to be created
+          schema:
+            $ref: "#/definitions/Rating"
+      responses:
+        204:
+          description: rating succesfully added.
+        400: 
+          description: Error adding a rating.
+        500:
+          $ref: "#/responses/DefaultErrorResponse"
+  
+  /ratings/{session}:
+    get:
+      summary: get a session'rating
+      description: retrieve the rating of a given session
+      parameters:
+        - $ref: "#/parameters/Session"
+      responses:
+        200:
+          description: a rating
+          schema:
+            $ref: "#/definitions/Rating"
+        404:
+          description: Session not found
+        500:
+          $ref: "#/responses/DefaultErrorResponse"
+      
+definitions:
+  Rating:
+    required:
+      - rating
+      - session
+    properties:
+      rating:
+        type: integer
+      session:
+        type: string
+      user:
+        type: string
+  
+  Ratings:
+    type: array
+    items:
+      $ref: "#/definitions/Rating"
+      
+  Error:
+    properties:
+      code: 
+        type: string
+      message:
+        type: string
+        
+responses:
+  DefaultErrorResponse:
+    description: generic error occurred
+    schema:
+      $ref: "#/definitions/Error"
+  
+parameters:
+  PageSize:
+    name: pageSize
+    in: query
+    description: number of ratings returned
+    type: integer
+  PageNumber:
+    name: pageNumber
+    in: query
+    description: page number
+    type: integer
+  Session:
+    name: session
+    in: path
+    required: true
+    description: the title of the session
+    type: string
